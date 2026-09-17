@@ -1,0 +1,12 @@
+CREATE TABLE usuario (
+  id_usuario            SERIAL PRIMARY KEY,
+  nome                  varchar(100) NOT NULL,
+  email                 varchar(100) NOT NULL UNIQUE,
+  senha_hash            varchar(255) NOT NULL,
+  data_nascimento       date NOT NULL,
+  eh_maior_idade        boolean NOT NULL,
+  id_responsavel_legal  int,
+  tipo_perfil           varchar(50) NOT NULL,
+  consentimento_lgpd_geo boolean NOT NULL,
+  data_cadastro         timestamp DEFAULT now()
+);
