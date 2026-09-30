@@ -89,3 +89,11 @@ CREATE TABLE  item_bagagem_catalogo(
  data_soliticao timestamp,
  data_atualizacao timestamp
  );
+CREAT TABLE   avaliacoa_estabelecimento( 
+id_avaliacao     int ,
+id_usuario       int notnull,
+id_viagem        int notnull,
+nome                int notnull,
+comentario           text,
+data_avaliacao    tamestamp 
+);
