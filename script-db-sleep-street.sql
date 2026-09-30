@@ -70,3 +70,22 @@ CREATE TABLE bagagem (
   item_checado boolean,
   incluso_manualmente boolean
 );
+
+CREATE TABLE  item_bagagem_catalogo(
+ id-item_bagagem_catalogo  int ,
+ nome_item varchar(100) notnull ,
+ perfil_viagem  tipo_viagem_enum varchar(255),
+ clima_indicado varchar(30)
+);
+ CREATE TABLE solicitacao_reembolso(
+ id_reembolso  int ,
+ id_viagem int notnull;
+ id_solicitante  int notnull,
+ descricao_incidente text notnull,
+ valor_total_pleiteado decimal (10,2) notnull,
+ url_comprovante_anexo varchar(255)notnull,
+ status status_reembolso_enum varchar(255)notnull;
+ id_moderador_analista int,
+ data_soliticao timestamp,
+ data_atualizacao timestamp
+ );
