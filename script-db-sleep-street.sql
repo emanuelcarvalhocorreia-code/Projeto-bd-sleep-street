@@ -25,6 +25,7 @@ CREATE TABLE usuario (
   consentimento_lgpd_geo boolean NOT NULL,
   data_cadastro         timestamp DEFAULT now()
 );
+
 CREATE TABLE estabelecimento_favorito(
  id_favorito SERIAL PRIMARY KEY,
  id_usuario int not null,
@@ -34,9 +35,9 @@ CREATE TABLE estabelecimento_favorito(
 
 CREATE TABLE estabelecimento(
   id_estabelecimento SERIAL PRIMARY KEY,
-  nome varchar(150) note null,
-  categoria categoria_estabelecimento_enum varchar not null,
-  faixa_preco faixa_preco_enum varchar not null,
+  nome varchar(150) not null,
+  categoria_estabelecimento varchar(255) not null,
+  faixa_preco varchar(255) not null,
   avaliacao_media decimal(3,2),
   latitude decimal(10,8) not null,
   longitude decimal(11,8) not null,
@@ -48,7 +49,7 @@ CREATE TABLE estabelecimento(
 CREATE TABLE despesa_viagem(
   id_despesa SERIAL PRIMARY KEY,
   id_viagem int not null,
-  categoria categoria_despesa_enum varchar not null,
+  categoria_despesa_enum varchar not null,
   descricao varchar(150) not null,
   valor_despesa decimal(10,2) not null,
   data_despesa timestamp
@@ -57,43 +58,46 @@ CREATE TABLE despesa_viagem(
 CREATE TABLE historico_status_reembolso(
   id_historico SERIAL PRIMARY KEY,
   id_reembolso int not null,
-  status_anterior status_reembolso_enum varchar,
-  status_novo status_reembolso_enum varchar not null,
+  status_reembolso varchar(255),
+   status_reembolso_enum varchar not null,
   observacao_moderador text,
   id_modificador int not null,
   data_modificacao timestamp
 );
+
 CREATE TABLE bagagem (
   id_checklist_item SERIAL PRIMARY KEY,
-  id_viagem notnull,
-  nome_item varchar(100) notnull,
+  id_viagem not null,
+  nome_item varchar(100) not null,
   item_checado boolean,
   incluso_manualmente boolean
 );
 
 CREATE TABLE  item_bagagem_catalogo(
  id-item_bagagem_catalogo SERIAL PRIMARY KEY int ,
- nome_item varchar(100) notnull ,
+ nome_item varchar(100) not null ,
  perfil_viagem  tipo_viagem_enum varchar(255),
  clima_indicado varchar(30)
 );
+
  CREATE TABLE solicitacao_reembolso(
- id_reembolso SERIAL PRIMARY KEY int ,
- id_viagem int notnull;
- id_solicitante  int notnull,
- descricao_incidente text notnull,
- valor_total_pleiteado decimal (10,2) notnull,
- url_comprovante_anexo varchar(255)notnull,
- status status_reembolso_enum varchar(255)notnull;
+ id_reembolso SERIAL PRIMARY KEY ,
+ id_viagem int not null,
+id_solicitante INT NOT NULL,
+ descricao_incidente text not null,
+ valor_total_pleiteado decimal (10,2) not null,
+ url_comprovante_anexo varchar(255)not null,
+ status status_reembolso varchar(255)not null;
  id_moderador_analista int,
  data_soliticao timestamp,
  data_atualizacao timestamp
  );
+
 CREATE TABLE   avaliacao_estabelecimento( 
-id_avaliacao SERIAL PRIMARY KEY int ,
-id_usuario       int notnull,
-id_viagem        int notnull,
-nome                int notnull,
+id_avaliacao SERIAL PRIMARY KEY  ,
+id_usuarío INT NOT NULL,
+id_viagem        int not null,
+nome                int not null,
 comentario           text,
-data_avaliacao    tamestamp 
+data_avaliacao timestamp
 );
