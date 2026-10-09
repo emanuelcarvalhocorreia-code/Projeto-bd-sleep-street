@@ -1,6 +1,6 @@
 CREATE TABLE viagem (
  id_viagem SERIAL PRIMARY KEY,
- id_viajante INT not null ,
+ id_viajante INT not null,
  titulo_viagem varchar(255) not null,
  destino_cidade varchar(100) not null,
  destino_pais varchar(100) not null,
@@ -67,16 +67,17 @@ CREATE TABLE historico_status_reembolso(
 
 CREATE TABLE bagagem (
   id_checklist_item SERIAL PRIMARY KEY,
-  id_viagem not null,
+  id_viagem int not null,
   nome_item varchar(100) not null,
   item_checado boolean,
   incluso_manualmente boolean
 );
 
 CREATE TABLE  item_bagagem_catalogo(
- id-item_bagagem_catalogo SERIAL PRIMARY KEY int ,
+ id_item_bagagem_catalogo SERIAL PRIMARY KEY ,
  nome_item varchar(100) not null ,
- perfil_viagem  tipo_viagem_enum varchar(255),
+ perfil_viagem  varchar(255),
+ tipo_viagem varchar(255),
  clima_indicado varchar(30)
 );
 
@@ -87,7 +88,7 @@ id_solicitante INT NOT NULL,
  descricao_incidente text not null,
  valor_total_pleiteado decimal (10,2) not null,
  url_comprovante_anexo varchar(255)not null,
- status status_reembolso varchar(255)not null;
+  status_reembolso varchar(255)not null,
  id_moderador_analista int,
  data_soliticao timestamp,
  data_atualizacao timestamp
