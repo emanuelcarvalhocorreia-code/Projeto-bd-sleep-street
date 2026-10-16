@@ -197,7 +197,28 @@ CREATE TABLE bagagem (
   nome_item varchar(100) not null,
   item_checado boolean,
   incluso_manualmente boolean
-);
+)
+ INSERT INTO bagagem (
+    id_bagagem,
+    id_usuario,
+    id_viajem,
+    peso_kg,
+    dimensoes,
+    data_checkin,
+    status,
+    observacao
+)
+VALUES
+    (1, 123, 1, 12.5, '55x40x20', '2025-12-15 06:00', 'pendente', 'Bagagem de mão'),
+    (2, 123, 2, 15.0, '65x45x30', '2025-12-18 07:30', 'checkin', 'Bagagem grande'),
+    (3, 456, 3, 8.0, '45x30x20', '2025-11-10 08:00', 'embarcado', 'Bagagem de mão'),
+    (4, 456, 4, 20.0, '70x50x30', '2025-11-12 10:00', 'checkin', 'Bagagem despachada'),
+    (5, 789, 5, 10.0, '50x40x25', '2025-10-25 05:30', 'pendente', 'Bagagem de mão'),
+    (6, 789, 6, 7.5, '45x30x20', '2025-10-28 09:00', 'checkin', 'Bagagem de mão'),
+    (7, 123, 7, 18.0, '60x45x25', '2025-08-10 06:00', 'checkin', 'Bagagem despachada'),
+    (8, 456, 8, 9.0, '50x40x25', '2025-08-12 08:30', 'embarcado', 'Bagagem de mão'),
+    (9, 789, 9, 6.0, '40x30x20', '2025-08-10 07:00', 'checkin', 'Bagagem pequena'),
+    (10, 123, 10, 14.0, '55x40x25', '2025-08-15 05:00', 'checkin', 'Bagagem de mão');
 
 CREATE TABLE  item_bagagem_catalogo(
  id_item_bagagem_catalogo  SERIAL PRIMARY KEY ,
