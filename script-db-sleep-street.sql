@@ -168,7 +168,28 @@ CREATE TABLE historico_status_reembolso(
   observacao_moderador text,
   id_modificador int not null,
   data_modificacao timestamp
-);
+)
+ INSERT INTO historico_reembolso (
+    id_historico_reembolso,
+    id_usuario,
+    id_viajem,
+    data_hora,
+    valor_reembolso,
+    metodo_pagamento,
+    status,
+    observacao
+)
+VALUES
+    (1, 123, 1, NOW(), 120.50, 'Cartão de Crédito', 'concluido', 'Reembolso de passagem aérea'),
+    (2, 123, 2, NOW(), 85.00, 'Cartão de Crédito', 'concluido', 'Reembolso de hotel'),
+    (3, 456, 3, NOW(), 45.30, 'Dinheiro', 'concluido', 'Reembolso de alimentação'),
+    (4, 456, 4, NOW(), 210.00, 'Transferência', 'pendente', 'Aguardando liberação do banco'),
+    (5, 789, 5, NOW(), 68.75, 'Cartão de Crédito', 'concluido', 'Reembolso de transporte local'),
+    (6, 789, 6, NOW(), 95.40, 'Cartão de Crédito', 'concluido', 'Reembolso de alimentação'),
+    (7, 123, 7, NOW(), 152.00, 'Dinheiro', 'concluido', 'Reembolso de ingresso'),
+    (8, 456, 8, NOW(), 37.50, 'Cartão de Crédito', 'concluido', 'Reembolso de compra local'),
+    (9, 789, 9, NOW(), 120.00, 'Transferência', 'concluido', 'Reembolso de depósito'),
+    (10, 123, 10, NOW(), 55.00, 'Cartão de Crédito', 'pendente', 'Aguardando aprovação');
 
 CREATE TABLE bagagem (
   id_checklist_item  SERIAL PRIMARY KEY,
