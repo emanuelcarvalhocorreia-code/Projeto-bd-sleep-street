@@ -56,8 +56,8 @@ INSERT INTO usuario (
 )
 
 VALUES
-    (1, 123, 'João Silva', 'joao@email.com', '(41) 98765-4321', NOW()),
-    (2, 456, 'Maria Santos', 'maria@email.com', '(41) 99999-9999', NOW()),
+    (1, 123, 'João Silva', 'joao@email.com', '(41) 98765-4321'),
+    (2, 456, 'Maria Santos', 'maria@email.com', '(41) 99999-9999'),
     (3, 789, 'Pedro Oliveira', 'pedro@email.com', '(41) 98888-8888'),
     (4, 123, 'Ana Costa', 'ana@email.com', '(41) 97777-7777'),
     (5, 456, 'Lucas Mendes', 'lucas@email.com', '(41) 96666-6666'),
