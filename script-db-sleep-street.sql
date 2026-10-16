@@ -45,7 +45,27 @@ CREATE TABLE usuario (
   tipo_perfil           varchar(50) NOT NULL,
   consentimento_lgpd_geo boolean NOT NULL,
   data_cadastro         timestamp DEFAULT now()
-);
+)
+INSERT INTO usuario (
+    id_usuario,
+    id_viajante,
+    nome,
+    email,
+    telefone,
+    data_criacao
+)
+
+VALUES
+    (1, 123, 'João Silva', 'joao@email.com', '(41) 98765-4321', NOW()),
+    (2, 456, 'Maria Santos', 'maria@email.com', '(41) 99999-9999', NOW()),
+    (3, 789, 'Pedro Oliveira', 'pedro@email.com', '(41) 98888-8888'),
+    (4, 123, 'Ana Costa', 'ana@email.com', '(41) 97777-7777'),
+    (5, 456, 'Lucas Mendes', 'lucas@email.com', '(41) 96666-6666'),
+    (6, 789, 'Beatriz Lima', 'beatriz@email.com', '(41) 95555-5555'),
+    (7, 123, 'Carlos Ferreira', 'carlos@email.com', '(41) 94444-4444'),
+    (8, 456, 'Fernanda Rocha', 'fernanda@email.com', '(41) 93333-3333'),
+    (9, 789, 'Thiago Nunes', 'thiago@email.com', '(41) 92222-2222'),
+    (10, 123, 'Juliana Almeida', 'juliana@email.com', '(41) 91111-1111');
 
 CREATE TABLE estabelecimento_favorito(
  id_favorito SERIAL PRIMARY KEY,
