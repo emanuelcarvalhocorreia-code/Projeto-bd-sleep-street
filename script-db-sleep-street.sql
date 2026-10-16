@@ -139,6 +139,7 @@ CREATE TABLE despesa_viagem(
   valor_despesa decimal(10,2) not null,
   data_despesa timestamp
 )
+ 
  INSERT INTO despeja_viagem (
     id_despeja_viagem,
     id_usuario,
@@ -226,7 +227,27 @@ CREATE TABLE  item_bagagem_catalogo(
  perfil_viagem  varchar(255),
  tipo_viagem varchar(255),
  clima_indicado varchar(30)
-);
+)
+ INSERT INTO item_bagagem_catalago (
+    id_item_bagagem_catalago,
+    nome_item,
+    tipo,
+    dimensoes,
+    peso_maximo_kg,
+    descricao,
+    status
+)
+VALUES
+    (1, 'Mochila de viagem', 'Mochila', '45x30x20', 5.0, 'Mochila impermeável com compartimento interno', 'disponivel'),
+    (2, 'Maleta de cabine', 'Maleta', '55x35x20', 7.0, 'Maleta rígida com rodas', 'disponivel'),
+    (3, 'Valise grande', 'Maleta', '70x45x30', 12.0, 'Valise para despache com compartimento expandível', 'disponivel'),
+    (4, 'Saco de dormir', 'Acessório', '120x70x40', 1.5, 'Saco de dormir leve e confortável', 'disponivel'),
+    (5, 'Saco de lona', 'Acessório', '80x60x30', 2.0, 'Saco de lona para compras e equipamentos', 'disponivel'),
+    (6, 'Cinto de segurança', 'Acessório', '100x3', 0.3, 'Cinto de segurança para aviões', 'disponivel'),
+    (7, 'Kit de primeiros socorros', 'Acessório', '30x20x10', 1.2, 'Kit de primeiros socorros completo', 'disponivel'),
+    (8, 'Monitor de ar', 'Acessório', '20x15x10', 0.8, 'Monitor de ar com medidor de pressão', 'disponivel'),
+    (9, 'Guarda-chuva dobrável', 'Acessório', '120x80x10', 0.4, 'Guarda-chuva resistente à chuva', 'disponivel'),
+    (10, 'Lanterna LED', 'Acessório', '15x10x5', 0.2, 'Lanterna LED recarregável', 'disponivel');
 
  CREATE TABLE solicitacao_reembolso(
  id_reembolso  SERIAL PRIMARY KEY ,
