@@ -11,7 +11,28 @@ CREATE TABLE viagem (
  ativa boolean,
  data_criacao timestamp
 
-);
+)
+
+INSERT INTO viagem (
+    id_viagem,
+    id_viajante,
+    titulo_viagem,
+    destino_cidade,
+    destino_pais,
+    fuso_horario_destino,
+    data_inicio,
+    data_fim,
+    orcamento_total,
+    ativa,
+    data_criacao
+)
+VALUES
+    (1, 123, 'Férias na praia', 'Rio de Janeiro', 'Brasil', 'BRT', '2025-12-15', '2025-12-20', 4500.00, TRUE, NOW()),
+    (2, 456, 'Trabalho em Paris', 'Paris', 'França', 'CET', '2025-11-10', '2025-11-15', 3200.00, FALSE, NOW()),
+    (3, 789, 'Viagem para Tóquio', 'Tóquio', 'Japão', 'JST', '2025-10-25', '2025-10-30', 1800.00, TRUE, NOW()),
+    (4, 123, 'Casamento em Florença', 'Florença', 'Itália', 'CET', '2025-08-10', '2025-08-15', 5200.00, TRUE, NOW());
+
+SELECT * FROM viagem;
 
 CREATE TABLE usuario (
   id_usuario            SERIAL PRIMARY KEY,
