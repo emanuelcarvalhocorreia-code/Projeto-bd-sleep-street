@@ -72,7 +72,26 @@ CREATE TABLE estabelecimento_favorito(
  id_usuario int not null,
  id_estabelecimento int not null,
  data_adicao timestamp
-);
+) 
+ INSERT INTO estabelecimento_favorito (
+    id_estabelecimento_favorito,
+    id_usuario,
+    id_estabelecimento,
+    nome_estabelecimento,
+    data_adicionado,
+    nota
+)
+VALUES
+    (1, 123, 101, 'Café do Povo', NOW(), 5.0),
+    (2, 123, 102, 'Padaria do Tio Zé', NOW(), 4.5),
+    (3, 456, 103, 'Churrascaria do Zé', NOW(), 4.0),
+    (4, 456, 104, 'Mercado Central', NOW(), 4.8),
+    (5, 789, 105, 'Lanchonete da Maria', NOW(), 4.2),
+    (6, 123, 106, 'Bar do Chico', NOW(), 4.7),
+    (7, 456, 107, 'Sorveteria Geladinha', NOW(), 5.0),
+    (8, 789, 108, 'Restaurante do João', NOW(), 4.3),
+    (9, 123, 109, 'Pet Shop do Bidu', NOW(), 4.9),
+    (10, 456, 110, 'Clínica do Dr. Pedro', NOW(), 4.6);
 
 CREATE TABLE estabelecimento(
   id_estabelecimento  SERIAL PRIMARY KEY,
