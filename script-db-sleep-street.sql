@@ -291,4 +291,24 @@ id_viagem        int not null,
 nome                int not null,
 comentario           text,
 data_avaliacao timestamp
-);
+)
+ INSERT INTO avaliacao_estabelecimento (
+    id_avaliacao,
+    id_estabelecimento,
+    id_usuario,
+    data_avaliacao,
+    nota,
+    comentario,
+    status
+)
+VALUES
+    (1, 101, 123, NOW(), 5.0, 'Excelente café, super recomendo! Atendimento ótimo e preço justo.', 'aprovado'),
+    (2, 102, 123, NOW(), 4.8, 'Pão de queijo delicioso, sempre fresquinho. Melhor padaria da região!', 'aprovado'),
+    (3, 103, 456, NOW(), 4.9, 'Churrasco incrível, carne suculenta e porções generosas.', 'aprovado'),
+    (4, 104, 456, NOW(), 4.7, 'Mercado completo com preços acessíveis e produtos de qualidade.', 'aprovado'),
+    (5, 105, 789, NOW(), 4.5, 'Lanche bom e rápido, sempre gostoso.', 'aprovado'),
+    (6, 106, 789, NOW(), 4.6, 'Barzinho agradável, drinks bem feitos e clima ótimo.', 'aprovado'),
+    (7, 107, 123, NOW(), 5.0, 'Sorvete da melhor qualidade, textura perfeita!', 'aprovado'),
+    (8, 108, 456, NOW(), 4.8, 'Restaurante com comida deliciosa e ambiente bonito.', 'aprovado'),
+    (9, 109, 789, NOW(), 4.9, 'Pet shop com atendimento excelente, produtos de qualidade.', 'aprovado'),
+    (10, 110, 123, NOW(), 4.7, 'Clínica profissional, sempre atende muito bem.', 'aprovado');
