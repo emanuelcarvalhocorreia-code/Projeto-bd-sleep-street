@@ -138,7 +138,27 @@ CREATE TABLE despesa_viagem(
   descricao varchar(150) not null,
   valor_despesa decimal(10,2) not null,
   data_despesa timestamp
-);
+)
+ INSERT INTO despeja_viagem (
+    id_despeja_viagem,
+    id_usuario,
+    id_estabelecimento,
+    id_viajem,
+    data_hora_despeja,
+    quantidade,
+    observacao
+)
+VALUES
+    (1, 123, 101, 1, NOW(), 2.5, 'Café expresso duplo'),
+    (2, 123, 102, 2, NOW(), 1.0, 'Pão de queijo 3 unidades'),
+    (3, 456, 103, 1, NOW(), 0.8, 'Cerveja artesanal 500ml'),
+    (4, 456, 104, 3, NOW(), 3.0, 'Água mineral 2L'),
+    (5, 789, 105, 2, NOW(), 4.0, 'Lanche misto 2 unidades'),
+    (6, 789, 106, 1, NOW(), 1.2, 'Cerveja lager 600ml'),
+    (7, 123, 107, 4, NOW(), 1.5, 'Sorvete de chocolate 200g'),
+    (8, 456, 108, 2, NOW(), 2.0, 'Suco natural laranja 300ml'),
+    (9, 789, 109, 1, NOW(), 0.5, 'Ração para cães 500g'),
+    (10, 123, 110, 3, NOW(), 1.0, 'Medicamento para pets 100ml');
 
 CREATE TABLE historico_status_reembolso(
   id_historico  SERIAL PRIMARY KEY,
