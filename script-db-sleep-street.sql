@@ -45,27 +45,30 @@ id_responsavel_legal  int,
 tipo_perfil           varchar(50) NOT NULL,
 consentimento_lgpd_geo boolean NOT NULL,
 data_cadastro         timestamp DEFAULT now()
+)INSERT INTO usuario (
+    id_usuario,
+    nome,
+    email,
+    senha_hash,
+    data_nascimento,
+    eh_maior_idade,
+    id_responsavel_legal,
+    tipo_perfil,
+    consentimento_lgpd_geo,
+    data_cadastro
 )
-INSERT INTO usuario (
-id_usuario,
-id_viajante,
-nome,
-email,
-telefone,
-data_criacao
-)
-
 VALUES
-(1, 123, 'João Silva', 'joao@email.com', '(41) 98765-4321'),
-(2, 456, 'Maria Santos', 'maria@email.com', '(41) 99999-9999'),
-(3, 789, 'Pedro Oliveira', 'pedro@email.com', '(41) 98888-8888'),
-(4, 123, 'Ana Costa', 'ana@email.com', '(41) 97777-7777'),
-(5, 456, 'Lucas Mendes', 'lucas@email.com', '(41) 96666-6666'),
-(6, 789, 'Beatriz Lima', 'beatriz@email.com', '(41) 95555-5555'),
-(7, 123, 'Carlos Ferreira', 'carlos@email.com', '(41) 94444-4444'),
-(8, 456, 'Fernanda Rocha', 'fernanda@email.com', '(41) 93333-3333'),
-(9, 789, 'Thiago Nunes', 'thiago@email.com', '(41) 92222-2222'),
-(10, 123, 'Juliana Almeida', 'juliana@email.com', '(41) 91111-1111');
+    (1, 'João Silva', 'joao@email.com', '$2a$10$ExemploSenhaHash123', '1995-05-15', TRUE, NULL, 'viajante', TRUE, NOW()),
+    (2, 'Maria Santos', 'maria@email.com', '$2a$10$ExemploSenhaHash456', '1998-08-22', TRUE, NULL, 'viajante', TRUE, NOW()),
+    (3, 'Pedro Oliveira', 'pedro@email.com', '$2a$10$ExemploSenhaHash789', '1992-11-10', TRUE, NULL, 'viajante', TRUE, NOW()),
+    (4, 'Ana Costa', 'ana@email.com', '$2a$10$ExemploSenhaHash012', '2000-03-05', TRUE, NULL, 'viajante', TRUE, NOW()),
+    (5, 'Lucas Mendes', 'lucas@email.com', '$2a$10$ExemploSenhaHash345', '1997-07-30', TRUE, NULL, 'viajante', TRUE, NOW()),
+    (6, 'Beatriz Lima', 'beatriz@email.com', '$2a$10$ExemploSenhaHash678', '1994-12-12', TRUE, NULL, 'viajante', TRUE, NOW()),
+    (7, 'Carlos Ferreira', 'carlos@email.com', '$2a$10$ExemploSenhaHash901', '1999-06-25', TRUE, NULL, 'viajante', TRUE, NOW()),
+    (8, 'Fernanda Rocha', 'fernanda@email.com', '$2a$10$ExemploSenhaHash234', '1996-09-18', TRUE, NULL, 'viajante', TRUE, NOW()),
+    (9, 'Thiago Nunes', 'thiago@email.com', '$2a$10$ExemploSenhaHash567', '2001-04-08', TRUE, NULL, 'viajante', TRUE, NOW()),
+    (10, 'Juliana Almeida', 'juliana@email.com', '$2a$10$ExemploSenhaHash890', '1993-01-20', TRUE, NULL, 'viajante', TRUE, NOW());
+     select * from usuario
 
 CREATE TABLE estabelecimento_favorito(
 id_favorito SERIAL PRIMARY KEY,
