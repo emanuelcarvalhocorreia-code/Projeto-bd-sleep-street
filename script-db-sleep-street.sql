@@ -45,7 +45,8 @@ id_responsavel_legal  int,
 tipo_perfil           varchar(50) NOT NULL,
 consentimento_lgpd_geo boolean NOT NULL,
 data_cadastro         timestamp DEFAULT now()
-)INSERT INTO usuario (
+    
+INSERT INTO usuario (
     id_usuario,
     nome,
     email,
@@ -105,32 +106,30 @@ horario_abertura time,
 horario_fechamento time,
 ativo boolean
 )
+    
 INSERT INTO estabelecimento (
-id_estabelecimento,
-id_usuario,
-nome,
-tipo,
-endereco,
-cidade,
-estado,
-pais,
-telefone,
-horario_funcionamento,
-nota,
-data_criacao
+    id_estabelecimento,
+    nome,
+    categoria_estabelecimento,
+    faixa_preco,
+    avaliacao_media,
+    latitude,
+    longitude,
+    horario_abertura,
+    horario_fechamento,
+    ativo
 )
 VALUES
-(101, 123, 'Café do Povo', 'Cafeteria', 'Rua das Flores, 123', 'Curitiba', 'PR', 'Brasil', '(41) 98765-4321', '07:00 - 18:00', 4.8, NOW()),
-(102, 123, 'Padaria do Tio Zé', 'Padaria', 'Rua da Padaria, 456', 'Curitiba', 'PR', 'Brasil', '(41) 99999-9999', '06:00 - 20:00', 4.5, NOW()),
-(103, 123, 'Churrascaria do Zé', 'Restaurante', 'Av. Principal, 789', 'Curitiba', 'PR', 'Brasil', '(41) 98888-8888', '12:00 - 23:00', 4.9, NOW()),
-(104, 456, 'Mercado Central', 'Supermercado', 'Rua do Mercado, 321', 'Curitiba', 'PR', 'Brasil', '(41) 97777-7777', '08:00 - 22:00', 4.7, NOW()),
-(105, 456, 'Lanchonete da Maria', 'Lanchonete', 'Rua dos Lanchões, 654', 'Curitiba', 'PR', 'Brasil', '(41) 96666-6666', '08:00 - 22:00', 4.6, NOW()),
-(106, 789, 'Bar do Chico', 'Bar', 'Rua do Bar, 987', 'Curitiba', 'PR', 'Brasil', '(41) 95555-5555', '16:00 - 02:00', 4.4, NOW()),
-(107, 789, 'Sorveteria Geladinha', 'Sorveteria', 'Rua dos Sorvetes, 111', 'Curitiba', 'PR', 'Brasil', '(41) 94444-4444', '11:00 - 23:00', 4.9, NOW()),
-(108, 123, 'Restaurante do João', 'Restaurante', 'Rua do Restaurante, 222', 'Curitiba', 'PR', 'Brasil', '(41) 93333-3333', '12:00 - 23:00', 4.8, NOW()),
-(109, 456, 'Pet Shop do Bidu', 'Pet Shop', 'Rua dos Pets, 333', 'Curitiba', 'PR', 'Brasil', '(41) 92222-2222', '09:00 - 20:00', 4.7, NOW()),
-(110, 789, 'Clínica do Dr. Pedro', 'Clínica', 'Rua da Saúde, 444', 'Curitiba', 'PR', 'Brasil', '(41) 91111-1111', '08:00 - 20:00', 4.9, NOW());
-
+    (101, 'Café do Povo', 'Cafeteria', 'Barato', 4.8, -25.4284, -49.2733, '07:00', '18:00', TRUE),
+    (102, 'Padaria do Tio Zé', 'Padaria', 'Barato', 4.5, -25.4284, -49.2733, '06:00', '20:00', TRUE),
+    (103, 'Churrascaria do Zé', 'Restaurante', 'Médio', 4.9, -25.4284, -49.2733, '12:00', '23:00', TRUE),
+    (104, 'Mercado Central', 'Supermercado', 'Barato', 4.7, -25.4284, -49.2733, '08:00', '22:00', TRUE),
+    (105, 'Lanchonete da Maria', 'Lanchonete', 'Barato', 4.6, -25.4284, -49.2733, '08:00', '22:00', TRUE),
+    (106, 'Bar do Chico', 'Bar', 'Médio', 4.4, -25.4284, -49.2733, '16:00', '02:00', TRUE),
+    (107, 'Sorveteria Geladinha', 'Sorveteria', 'Barato', 4.9, -25.4284, -49.2733, '11:00', '23:00', TRUE),
+    (108, 'Restaurante do João', 'Restaurante', 'Médio', 4.8, -25.4284, -49.2733, '12:00', '23:00', TRUE),
+    (109, 'Pet Shop do Bidu', 'Pet Shop', 'Barato', 4.7, -25.4284, -49.2733, '09:00', '20:00', TRUE),
+    (110, 'Clínica do Dr. Pedro', 'Clínica', 'Médio', 4.9, -25.4284, -49.2733, '08:00', '20:00', TRUE);
 CREATE TABLE despesa_viagem(
 id_despesa  SERIAL PRIMARY KEY,
 id_viagem int not null,
