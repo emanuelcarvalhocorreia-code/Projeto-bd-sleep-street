@@ -130,6 +130,7 @@ VALUES
     (108, 'Restaurante do João', 'Restaurante', 'Médio', 4.8, -25.4284, -49.2733, '12:00', '23:00', TRUE),
     (109, 'Pet Shop do Bidu', 'Pet Shop', 'Barato', 4.7, -25.4284, -49.2733, '09:00', '20:00', TRUE),
     (110, 'Clínica do Dr. Pedro', 'Clínica', 'Médio', 4.9, -25.4284, -49.2733, '08:00', '20:00', TRUE);
+
 CREATE TABLE despesa_viagem(
 id_despesa  SERIAL PRIMARY KEY,
 id_viagem int not null,
