@@ -1,3 +1,6 @@
+ADD CONSTRAINT fk_viagem_usuario
+FOREIGN KEY (id_viajante) REFERENCES usuario (id_usuario);
+
 CREATE TABLE viagem (
 id_viagem   SERIAL PRIMARY KEY,
 id_viajante INT not null,
