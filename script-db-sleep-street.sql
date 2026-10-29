@@ -74,14 +74,19 @@ VALUES
     (8, 'Fernanda Rocha', 'fernanda@email.com', '$2a$10$ExemploSenhaHash234', '1996-09-18', TRUE, NULL, 'viajante', TRUE, NOW()),
     (9, 'Thiago Nunes', 'thiago@email.com', '$2a$10$ExemploSenhaHash567', '2001-04-08', TRUE, NULL, 'viajante', TRUE, NOW()),
     (10, 'Juliana Almeida', 'juliana@email.com', '$2a$10$ExemploSenhaHash890', '1993-01-20', TRUE, NULL, 'viajante', TRUE, NOW());
-     select * from usuario
-
-CREATE TABLE estabelecimento_favorito(
+select * from usuario
+    
+CREATE TABLE estabelecimento_favorito (
 id_favorito SERIAL PRIMARY KEY,
-id_usuario int not null,
-id_estabelecimento int not null,
-data_adicao timestamp
-) 
+id_usuario int NOT NULL,
+id_estabelecimento int NOT NULL,
+data_adicao timestamp DEFAULT now(),
+UNIQUE (id_usuario, id_estabelecimento),
+CONSTRAINT fk_favorito_usuario
+FOREIGN KEY (id_usuario) REFERENCES usuario (id_usuario),
+CONSTRAINT fk_favorito_estabelecimento
+FOREIGN KEY (id_estabelecimento) REFERENCES estabelecimento (id_estabelecimento)
+);
 INSERT INTO estabelecimento_favorito (
     id_usuario,
     id_estabelecimento,
@@ -289,14 +294,22 @@ VALUES
 (9, 789, 9, NOW(), 200.00, 'Depósito na conta', 'aprovado', 'comprovante_9.pdf'),
 (10, 123, 10, NOW(), 85.00, 'Compras no aeroporto', 'pendente', NULL);
 
-CREATE TABLE   avaliacao_estabelecimento( 
-id_avaliacao  SERIAL PRIMARY KEY  ,
-id_usuarío INT NOT NULL,
-id_viagem        int not null,
-nome                int not null,
-comentario           text,
-data_avaliacao timestamp
-)
+CREATE TABLE avaliacao_estabelecimento (
+id_avaliacao SERIAL PRIMARY KEY,
+id_usuario int NOT NULL,
+id_viagem int NOT NULL,
+id_estabelecimento int NOT NULL,
+nota int NOT NULL CHECK (nota BETWEEN 1 AND 5),
+comentario text,
+data_avaliacao timestamp DEFAULT now(),
+UNIQUE (id_usuario, id_estabelecimento),
+CONSTRAINT fk_avaliacao_usuario
+FOREIGN KEY (id_usuario) REFERENCES usuario (id_usuario),
+CONSTRAINT fk_avaliacao_viagem
+FOREIGN KEY (id_viagem) REFERENCES viagem (id_viagem),
+CONSTRAINT fk_avaliacao_estabelecimento
+FOREIGN KEY (id_estabelecimento) REFERENCES estabelecimento (id_estabelecimento)
+);
  INSERT INTO avaliacao_estabelecimento (
     id_avaliacao,
     id_estabelecimento,
