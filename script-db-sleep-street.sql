@@ -1,4 +1,4 @@
-CREATE TABLE viagem (
+ CREATE TABLE viagem (
 id_viagem SERIAL PRIMARY KEY,
 id_viajante int NOT NULL,
 titulo_viagem varchar(255) NOT NULL,
@@ -172,6 +172,8 @@ status_reembolso_enum varchar not null,
 observacao_moderador text,
 id_modificador int not null,
 data_modificacao timestamp
+ALTER TABLE historico_status_reembolso ADD CONSTRAINT fk_historico_reembolso
+FOREIGN KEY (id_reembolso) REFERENCES solicitacao_reembolso (id_reembolso);-
 )
 INSERT INTO historico_reembolso (
 id_historico_reembolso,
