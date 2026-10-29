@@ -9,7 +9,7 @@ CREATE TABLE usuario (
     tipo_perfil VARCHAR(50) NOT NULL,
     consentimento_lgpd_geo BOOLEAN NOT NULL,
     data_cadastro TIMESTAMP NOT NULL DEFAULT NOW(),
-    DROP CONSTRAINT fk_usuario_responsavel FOREIGN KEY (id_responsavel_legal) REFERENCES usuario (id_usuario)
+    CONSTRAINT fk_usuario_responsavel FOREIGN KEY (id_responsavel_legal) REFERENCES usuario (id_usuario)
 );
 
 INSERT INTO usuario (id_usuario, nome, email, senha_hash, data_nascimento, eh_maior_idade, id_responsavel_legal, tipo_perfil, consentimento_lgpd_geo)
@@ -25,6 +25,7 @@ VALUES
     (9, 'Thiago Nunes', 'thiago@email.com', '$2a$10$ExemploSenhaHash567', '2001-04-08', TRUE, NULL, 'viajante', TRUE),
     (10, 'Juliana Almeida', 'juliana@email.com', '$2a$10$ExemploSenhaHash890', '1993-01-20', TRUE, NULL, 'viajante', TRUE);
 
+
 CREATE TABLE viagem (
     id_viagem SERIAL PRIMARY KEY,
     id_viajante INT NOT NULL,
@@ -37,9 +38,7 @@ CREATE TABLE viagem (
     orcamento_total DECIMAL(12,2) NOT NULL,
     ativa BOOLEAN NOT NULL DEFAULT TRUE,
     data_criacao TIMESTAMP NOT NULL DEFAULT NOW(),
-    CONSTRAINT fk_viagem_usuario FOREIGN KEY (id_viajante) REFERENCES usuario (id_usuario) ON UPDATE CASCADE ON DELETE CASCADE,
-    CONSTRAINT chk_data_fim CHECK (data_fim >= data_inicio),
-    CONSTRAINT chk_orcamento_positivo CHECK (orcamento_total >= 0)
+    CONSTRAINT fk_viagem_usuario FOREIGN KEY (id_viajante) REFERENCES usuario (id_usuario)
 );
 
 INSERT INTO viagem (id_viagem, id_viajante, titulo_viagem, destino_cidade, destino_pais, fuso_horario_destino, data_inicio, data_fim, orcamento_total, ativa)
@@ -48,6 +47,7 @@ VALUES
     (2, 2, 'Trabalho em Paris', 'Paris', 'França', 'CET', '2025-11-10', '2025-11-15', 3200.00, FALSE),
     (3, 3, 'Viagem para Tóquio', 'Tóquio', 'Japão', 'JST', '2025-10-25', '2025-10-30', 1800.00, TRUE),
     (4, 1, 'Casamento em Florença', 'Florença', 'Itália', 'CET', '2025-08-10', '2025-08-15', 5200.00, TRUE);
+
 
 CREATE TABLE estabelecimento (
     id_estabelecimento SERIAL PRIMARY KEY,
@@ -59,11 +59,7 @@ CREATE TABLE estabelecimento (
     longitude DECIMAL(11,8) NOT NULL,
     horario_abertura TIME,
     horario_fechamento TIME,
-    ativo BOOLEAN NOT NULL DEFAULT TRUE,
-    CONSTRAINT chk_avaliacao_range CHECK (avaliacao_media BETWEEN 0.00 AND 5.00),
-    CONSTRAINT chk_coordenadas_latitude CHECK (latitude BETWEEN -90.0 AND 90.0),
-    CONSTRAINT chk_coordenadas_longitude CHECK (longitude BETWEEN -180.0 AND 180.0),
-    CONSTRAINT chk_horario_funcionamento CHECK (horario_abertura < horario_fechamento)
+    ativo BOOLEAN NOT NULL DEFAULT TRUE
 );
 
 INSERT INTO estabelecimento (id_estabelecimento, nome, categoria_estabelecimento, faixa_preco, avaliacao_media, latitude, longitude, horario_abertura, horario_fechamento, ativo)
@@ -79,14 +75,14 @@ VALUES
     (109, 'Pet Shop do Bidu', 'Pet Shop', 'Barato', 4.70, -25.4284, -49.2733, '09:00', '20:00', TRUE),
     (110, 'Clínica do Dr. Pedro', 'Clínica', 'Médio', 4.90, -25.4284, -49.2733, '08:00', '20:00', TRUE);
 
+
 CREATE TABLE estabelecimento_favorito (
     id_favorito SERIAL PRIMARY KEY,
     id_usuario INT NOT NULL,
     id_estabelecimento INT NOT NULL,
     data_adicao TIMESTAMP NOT NULL DEFAULT NOW(),
-    CONSTRAINT fk_favorito_usuario FOREIGN KEY (id_usuario) REFERENCES usuario (id_usuario) ON UPDATE CASCADE ON DELETE CASCADE,
-    CONSTRAINT fk_favorito_estabelecimento FOREIGN KEY (id_estabelecimento) REFERENCES estabelecimento (id_estabelecimento) ON UPDATE CASCADE ON DELETE CASCADE,
-    CONSTRAINT uk_usuario_estabelecimento UNIQUE (id_usuario, id_estabelecimento)
+    CONSTRAINT fk_favorito_usuario FOREIGN KEY (id_usuario) REFERENCES usuario (id_usuario),
+    CONSTRAINT fk_favorito_estabelecimento FOREIGN KEY (id_estabelecimento) REFERENCES estabelecimento (id_estabelecimento)
 );
 
 INSERT INTO estabelecimento_favorito (id_usuario, id_estabelecimento)
@@ -96,6 +92,7 @@ VALUES
     (3, 105), (3, 108),
     (4, 109), (4, 110);
 
+
 CREATE TABLE despesa_viagem (
     id_despesa SERIAL PRIMARY KEY,
     id_viagem INT NOT NULL,
@@ -103,9 +100,7 @@ CREATE TABLE despesa_viagem (
     descricao VARCHAR(150) NOT NULL,
     valor_despesa DECIMAL(10,2) NOT NULL,
     data_despesa TIMESTAMP NOT NULL DEFAULT NOW(),
-    CONSTRAINT fk_despesa_viagem FOREIGN KEY (id_viagem) REFERENCES viagem (id_viagem) ON UPDATE CASCADE ON DELETE CASCADE,
-    CONSTRAINT chk_valor_despesa_positivo CHECK (valor_despesa > 0),
-    CONSTRAINT chk_categoria_despesa CHECK (categoria_despesa IN ('Alimentação', 'Transporte', 'Hospedagem', 'Passeios', 'Compras', 'Outros'))
+    CONSTRAINT fk_despesa_viagem FOREIGN KEY (id_viagem) REFERENCES viagem (id_viagem)
 );
 
 INSERT INTO despesa_viagem (id_viagem, categoria_despesa, descricao, valor_despesa)
@@ -119,6 +114,7 @@ VALUES
     (4, 'Alimentação', 'Jantar executivo', 35.00),
     (4, 'Passeios', 'Ingresso para museu', 25.00);
 
+
 CREATE TABLE solicitacao_reembolso (
     id_reembolso SERIAL PRIMARY KEY,
     id_viagem INT NOT NULL,
@@ -130,11 +126,9 @@ CREATE TABLE solicitacao_reembolso (
     id_moderador_analista INT,
     data_solicitacao TIMESTAMP NOT NULL DEFAULT NOW(),
     data_atualizacao TIMESTAMP NOT NULL DEFAULT NOW(),
-    CONSTRAINT fk_reembolso_viagem FOREIGN KEY (id_viagem) REFERENCES viagem (id_viagem) ON UPDATE CASCADE ON DELETE CASCADE,
-    CONSTRAINT fk_reembolso_solicitante FOREIGN KEY (id_solicitante) REFERENCES usuario (id_usuario) ON UPDATE CASCADE ON DELETE CASCADE,
-    CONSTRAINT fk_reembolso_moderador FOREIGN KEY (id_moderador_analista) REFERENCES usuario (id_usuario) ON UPDATE CASCADE ON DELETE SET NULL,
-    CONSTRAINT chk_valor_pleiteado_positivo CHECK (valor_total_pleiteado > 0),
-    CONSTRAINT chk_status_reembolso CHECK (status_reembolso IN ('pendente', 'aprovado', 'rejeitado', 'em_analise'))
+    CONSTRAINT fk_reembolso_viagem FOREIGN KEY (id_viagem) REFERENCES viagem (id_viagem),
+    CONSTRAINT fk_reembolso_solicitante FOREIGN KEY (id_solicitante) REFERENCES usuario (id_usuario),
+    CONSTRAINT fk_reembolso_moderador FOREIGN KEY (id_moderador_analista) REFERENCES usuario (id_usuario)
 );
 
 INSERT INTO solicitacao_reembolso (id_viagem, id_solicitante, descricao_incidente, valor_total_pleiteado, url_comprovante_anexo, status_reembolso, id_moderador_analista)
@@ -145,6 +139,7 @@ VALUES
     (2, 2, 'Passeios e ingressos', 450.00, NULL, 'pendente', 6),
     (3, 3, 'Transporte local e táxi', 190.00, 'comprovante_5.pdf', 'aprovado', 7);
 
+
 CREATE TABLE historico_reembolso (
     id_historico SERIAL PRIMARY KEY,
     id_viagem INT NOT NULL,
@@ -153,10 +148,7 @@ CREATE TABLE historico_reembolso (
     metodo_pagamento VARCHAR(100) NOT NULL,
     status VARCHAR(50) NOT NULL,
     observacao TEXT,
-    CONSTRAINT fk_historico_viagem FOREIGN KEY (id_viagem) REFERENCES viagem (id_viagem) ON UPDATE CASCADE ON DELETE CASCADE,
-    CONSTRAINT chk_valor_reembolso_positivo CHECK (valor_reembolso >= 0),
-    CONSTRAINT chk_metodo_pagamento CHECK (metodo_pagamento IN ('Dinheiro', 'Cartão de Crédito', 'Cartão de Débito', 'Transferência', 'PIX')),
-    CONSTRAINT chk_status_historico CHECK (status IN ('pendente', 'concluido', 'falhou', 'processando'))
+    CONSTRAINT fk_historico_viagem FOREIGN KEY (id_viagem) REFERENCES viagem (id_viagem)
 );
 
 INSERT INTO historico_reembolso (id_viagem, valor_reembolso, metodo_pagamento, status, observacao)
@@ -168,13 +160,14 @@ VALUES
     (3, 68.75, 'Cartão de Crédito', 'concluido', 'Reembolso de transporte'),
     (4, 95.40, 'Cartão de Crédito', 'concluido', 'Reembolso de refeição');
 
+
 CREATE TABLE bagagem (
     id_bagagem SERIAL PRIMARY KEY,
     id_viagem INT NOT NULL,
     nome_item VARCHAR(100) NOT NULL,
     item_checado BOOLEAN NOT NULL DEFAULT FALSE,
     incluso_manualmente BOOLEAN NOT NULL DEFAULT FALSE,
-    CONSTRAINT fk_bagagem_viagem FOREIGN KEY (id_viagem) REFERENCES viagem (id_viagem) ON UPDATE CASCADE ON DELETE CASCADE
+    CONSTRAINT fk_bagagem_viagem FOREIGN KEY (id_viagem) REFERENCES viagem (id_viagem)
 );
 
 INSERT INTO bagagem (id_viagem, nome_item, item_checado, incluso_manualmente)
@@ -186,14 +179,13 @@ VALUES
     (3, 'Guarda-chuva', FALSE, TRUE),
     (4, 'Roupa formal', TRUE, TRUE);
 
+
 CREATE TABLE item_bagagem_catalago (
     id_item_bagagem_catalago SERIAL PRIMARY KEY,
     nome_item VARCHAR(100) NOT NULL UNIQUE,
     perfil_viagem VARCHAR(255),
     tipo_viagem VARCHAR(255),
-    clima_indicado VARCHAR(30),
-    CONSTRAINT chk_tipo_viagem CHECK (tipo_viagem IN ('Lazer', 'Trabalho', 'Aventura', 'Negócios', 'Todos')),
-    CONSTRAINT chk_clima_indicado CHECK (clima_indicado IN ('Quente', 'Frio', 'Médio', 'Chuva', 'Todos'))
+    clima_indicado VARCHAR(30)
 );
 
 INSERT INTO item_bagagem_catalago (nome_item, perfil_viagem, tipo_viagem, clima_indicado)
@@ -204,6 +196,7 @@ VALUES
     ('Saco de dormir', 'Aventura', 'Aventura', 'Frio'),
     ('Guarda-chuva dobrável', 'Todos', 'Todos', 'Chuva');
 
+
 CREATE TABLE avaliacao_estabelecimento (
     id_avaliacao SERIAL PRIMARY KEY,
     id_usuario INT NOT NULL,
@@ -212,10 +205,9 @@ CREATE TABLE avaliacao_estabelecimento (
     nota INT NOT NULL CHECK (nota BETWEEN 1 AND 5),
     comentario TEXT,
     data_avaliacao TIMESTAMP NOT NULL DEFAULT NOW(),
-    CONSTRAINT fk_avaliacao_usuario FOREIGN KEY (id_usuario) REFERENCES usuario (id_usuario) ON UPDATE CASCADE ON DELETE CASCADE,
-    CONSTRAINT fk_avaliacao_viagem FOREIGN KEY (id_viagem) REFERENCES viagem (id_viagem) ON UPDATE CASCADE ON DELETE CASCADE,
-    CONSTRAINT fk_avaliacao_estabelecimento FOREIGN KEY (id_estabelecimento) REFERENCES estabelecimento (id_estabelecimento) ON UPDATE CASCADE ON DELETE CASCADE,
-    CONSTRAINT uk_avaliacao_unica UNIQUE (id_usuario, id_viagem, id_estabelecimento)
+    CONSTRAINT fk_avaliacao_usuario FOREIGN KEY (id_usuario) REFERENCES usuario (id_usuario),
+    CONSTRAINT fk_avaliacao_viagem FOREIGN KEY (id_viagem) REFERENCES viagem (id_viagem),
+    CONSTRAINT fk_avaliacao_estabelecimento FOREIGN KEY (id_estabelecimento) REFERENCES estabelecimento (id_estabelecimento)
 );
 
 INSERT INTO avaliacao_estabelecimento (id_usuario, id_viagem, id_estabelecimento, nota, comentario)
@@ -228,14 +220,3 @@ VALUES
     (3, 3, 106, 5, 'Barzinho muito agradável...'),
     (1, 4, 107, 5, 'Sorvete da melhor qualidade...'),
     (2, 2, 108, 5, 'Restaurante com comida deliciosa...');
-
-SELECT * FROM usuario;
-SELECT * FROM viagem;
-SELECT * FROM estabelecimento;
-SELECT * FROM estabelecimento_favorito;
-SELECT * FROM despesa_viagem;
-SELECT * FROM solicitacao_reembolso;
-SELECT * FROM historico_reembolso;
-SELECT * FROM bagagem;
-SELECT * FROM item_bagagem_catalago;
-SELECT * FROM avaliacao_estabelecimento;
