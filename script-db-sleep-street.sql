@@ -34,6 +34,9 @@ VALUES
 
 SELECT * FROM viagem;
 
+ADD CONSTRAINT fk_viagem_usuario
+FOREIGN KEY (id_viajante) REFERENCES usuario (id_usuario);
+
 CREATE TABLE usuario (
 id_usuario            SERIAL PRIMARY KEY,
 nome                  varchar(100) NOT NULL,
