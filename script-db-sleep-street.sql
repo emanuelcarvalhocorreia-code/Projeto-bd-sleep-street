@@ -5,14 +5,14 @@ CREATE TABLE usuario (
     senha_hash VARCHAR(255) NOT NULL,
     data_nascimento DATE NOT NULL,
     eh_maior_idade BOOLEAN NOT NULL,
-    id_responsavel_legal INT,
+    fk_usuario_responsavel INT,
     tipo_perfil VARCHAR(50) NOT NULL,
     consentimento_lgpd_geo BOOLEAN NOT NULL,
     data_cadastro TIMESTAMP NOT NULL DEFAULT NOW(),
-    CONSTRAINT fk_usuario_responsavel FOREIGN KEY (id_responsavel_legal) REFERENCES usuario (id_usuario)
+    constraint fk_usuario_responsavel foreign key (fk_usuario_responsavel) references usuario (id_usuario)
 );
 
-INSERT INTO usuario (id_usuario, nome, email, senha_hash, data_nascimento, eh_maior_idade, id_responsavel_legal, tipo_perfil, consentimento_lgpd_geo)
+INSERT INTO usuario (id_usuario, nome, email, senha_hash, data_nascimento, eh_maior_idade, fk_usuario_responsavel, tipo_perfil, consentimento_lgpd_geo)
 VALUES
     (1, 'João Silva', 'joao@email.com', '$2a$10$ExemploSenhaHash123', '1995-05-15', TRUE, NULL, 'viajante', TRUE),
     (2, 'Maria Santos', 'maria@email.com', '$2a$10$ExemploSenhaHash456', '1998-08-22', TRUE, NULL, 'viajante', TRUE),
@@ -28,7 +28,7 @@ VALUES
 
 CREATE TABLE viagem (
     id_viagem SERIAL PRIMARY KEY,
-    id_viajante INT NOT NULL,
+    fk_usuario INT NOT NULL,
     titulo_viagem VARCHAR(255) NOT NULL,
     destino_cidade VARCHAR(100) NOT NULL,
     destino_pais VARCHAR(100) NOT NULL,
@@ -38,10 +38,10 @@ CREATE TABLE viagem (
     orcamento_total DECIMAL(12,2) NOT NULL,
     ativa BOOLEAN NOT NULL DEFAULT TRUE,
     data_criacao TIMESTAMP NOT NULL DEFAULT NOW(),
-    CONSTRAINT fk_viagem_usuario FOREIGN KEY (id_viajante) REFERENCES usuario (id_usuario)
+    constraint fk_usuario foreign key (fk_usuario) references usuario (id_usuario)
 );
 
-INSERT INTO viagem (id_viagem, id_viajante, titulo_viagem, destino_cidade, destino_pais, fuso_horario_destino, data_inicio, data_fim, orcamento_total, ativa)
+INSERT INTO viagem (id_viagem, fk_usuario, titulo_viagem, destino_cidade, destino_pais, fuso_horario_destino, data_inicio, data_fim, orcamento_total, ativa)
 VALUES
     (1, 1, 'Férias na praia', 'Rio de Janeiro', 'Brasil', 'BRT', '2025-12-15', '2025-12-20', 4500.00, TRUE),
     (2, 2, 'Trabalho em Paris', 'Paris', 'França', 'CET', '2025-11-10', '2025-11-15', 3200.00, FALSE),
@@ -78,14 +78,14 @@ VALUES
 
 CREATE TABLE estabelecimento_favorito (
     id_favorito SERIAL PRIMARY KEY,
-    id_usuario INT NOT NULL,
-    id_estabelecimento INT NOT NULL,
+    fk_usuario INT NOT NULL,
+    fk_estabelecimento INT NOT NULL,
     data_adicao TIMESTAMP NOT NULL DEFAULT NOW(),
-    CONSTRAINT fk_favorito_usuario FOREIGN KEY (id_usuario) REFERENCES usuario (id_usuario),
-    CONSTRAINT fk_favorito_estabelecimento FOREIGN KEY (id_estabelecimento) REFERENCES estabelecimento (id_estabelecimento)
+    constraint fk_usuario foreign key (fk_usuario) references usuario (id_usuario),
+    constraint fk_estabelecimento foreign key (fk_estabelecimento) references estabelecimento (id_estabelecimento)
 );
 
-INSERT INTO estabelecimento_favorito (id_usuario, id_estabelecimento)
+INSERT INTO estabelecimento_favorito (fk_usuario, fk_estabelecimento)
 VALUES
     (1, 101), (1, 102), (1, 106),
     (2, 103), (2, 104), (2, 107),
@@ -95,15 +95,15 @@ VALUES
 
 CREATE TABLE despesa_viagem (
     id_despesa SERIAL PRIMARY KEY,
-    id_viagem INT NOT NULL,
+    fk_viagem INT NOT NULL,
     categoria_despesa VARCHAR(100) NOT NULL,
     descricao VARCHAR(150) NOT NULL,
     valor_despesa DECIMAL(10,2) NOT NULL,
     data_despesa TIMESTAMP NOT NULL DEFAULT NOW(),
-    CONSTRAINT fk_despesa_viagem FOREIGN KEY (id_viagem) REFERENCES viagem (id_viagem)
+    constraint fk_viagem foreign key (fk_viagem) references viagem (id_viagem)
 );
 
-INSERT INTO despesa_viagem (id_viagem, categoria_despesa, descricao, valor_despesa)
+INSERT INTO despesa_viagem (fk_viagem, categoria_despesa, descricao, valor_despesa)
 VALUES
     (1, 'Alimentação', 'Café expresso duplo', 2.50),
     (1, 'Transporte', 'Táxi para o hotel', 45.00),
@@ -115,23 +115,22 @@ VALUES
     (4, 'Passeios', 'Ingresso para museu', 25.00);
 
 
-CREATE TABLE solicitacao_reembolso (
-    id_reembolso SERIAL PRIMARY KEY,
-    id_viagem INT NOT NULL,
-    id_solicitante INT NOT NULL,
+CREATE TABLE solicitacao_reembolso (id_reembolso SERIAL PRIMARY KEY,
+    fk_viagem INT NOT NULL,
+    fk_usuario_solicitante INT NOT NULL,
     descricao_incidente TEXT NOT NULL,
     valor_total_pleiteado DECIMAL(10,2) NOT NULL,
     url_comprovante_anexo VARCHAR(255),
     status_reembolso VARCHAR(255) NOT NULL DEFAULT 'pendente',
-    id_moderador_analista INT,
+    fk_usuario_moderador INT,
     data_solicitacao TIMESTAMP NOT NULL DEFAULT NOW(),
     data_atualizacao TIMESTAMP NOT NULL DEFAULT NOW(),
-    CONSTRAINT fk_reembolso_viagem FOREIGN KEY (id_viagem) REFERENCES viagem (id_viagem),
-    CONSTRAINT fk_reembolso_solicitante FOREIGN KEY (id_solicitante) REFERENCES usuario (id_usuario),
-    CONSTRAINT fk_reembolso_moderador FOREIGN KEY (id_moderador_analista) REFERENCES usuario (id_usuario)
+    constraint fk_viagem foreign key (fk_viagem) references viagem (id_viagem),
+    constraint fk_usuario_solicitante foreign key (fk_usuario_solicitante) references usuario (id_usuario),
+    constraint fk_usuario_moderador foreign key (fk_usuario_moderador) references usuario (id_usuario)
 );
 
-INSERT INTO solicitacao_reembolso (id_viagem, id_solicitante, descricao_incidente, valor_total_pleiteado, url_comprovante_anexo, status_reembolso, id_moderador_analista)
+INSERT INTO solicitacao_reembolso (fk_viagem, fk_usuario_solicitante, descricao_incidente, valor_total_pleiteado, url_comprovante_anexo, status_reembolso, fk_usuario_moderador)
 VALUES
     (1, 1, 'Passagem aérea ida e volta', 350.00, 'comprovante_1.pdf', 'aprovado', 5),
     (1, 1, 'Estadia no hotel', 280.00, 'comprovante_2.pdf', 'aprovado', 5),
@@ -142,16 +141,16 @@ VALUES
 
 CREATE TABLE historico_reembolso (
     id_historico SERIAL PRIMARY KEY,
-    id_viagem INT NOT NULL,
+    fk_viagem INT NOT NULL,
     data_hora TIMESTAMP NOT NULL DEFAULT NOW(),
     valor_reembolso DECIMAL(10,2) NOT NULL,
     metodo_pagamento VARCHAR(100) NOT NULL,
     status VARCHAR(50) NOT NULL,
     observacao TEXT,
-    CONSTRAINT fk_historico_viagem FOREIGN KEY (id_viagem) REFERENCES viagem (id_viagem)
+    constraint fk_viagem foreign key (fk_viagem) references viagem (id_viagem)
 );
 
-INSERT INTO historico_reembolso (id_viagem, valor_reembolso, metodo_pagamento, status, observacao)
+INSERT INTO historico_reembolso (fk_viagem, valor_reembolso, metodo_pagamento, status, observacao)
 VALUES
     (1, 120.50, 'Cartão de Crédito', 'concluido', 'Reembolso de passagem aérea'),
     (1, 85.00, 'Cartão de Crédito', 'concluido', 'Reembolso de hospedagem'),
@@ -163,14 +162,14 @@ VALUES
 
 CREATE TABLE bagagem (
     id_bagagem SERIAL PRIMARY KEY,
-    id_viagem INT NOT NULL,
+    fk_viagem INT NOT NULL,
     nome_item VARCHAR(100) NOT NULL,
     item_checado BOOLEAN NOT NULL DEFAULT FALSE,
     incluso_manualmente BOOLEAN NOT NULL DEFAULT FALSE,
-    CONSTRAINT fk_bagagem_viagem FOREIGN KEY (id_viagem) REFERENCES viagem (id_viagem)
+    constraint fk_viagem foreign key (fk_viagem) references viagem (id_viagem)
 );
 
-INSERT INTO bagagem (id_viagem, nome_item, item_checado, incluso_manualmente)
+INSERT INTO bagagem (fk_viagem, nome_item, item_checado, incluso_manualmente)
 VALUES
     (1, 'Mochila de viagem', TRUE, TRUE),
     (1, 'Maleta de mão', FALSE, TRUE),
@@ -199,18 +198,18 @@ VALUES
 
 CREATE TABLE avaliacao_estabelecimento (
     id_avaliacao SERIAL PRIMARY KEY,
-    id_usuario INT NOT NULL,
-    id_viagem INT NOT NULL,
-    id_estabelecimento INT NOT NULL,
+    fk_usuario INT NOT NULL,
+    fk_viagem INT NOT NULL,
+    fk_estabelecimento INT NOT NULL,
     nota INT NOT NULL CHECK (nota BETWEEN 1 AND 5),
     comentario TEXT,
     data_avaliacao TIMESTAMP NOT NULL DEFAULT NOW(),
-    CONSTRAINT fk_avaliacao_usuario FOREIGN KEY (id_usuario) REFERENCES usuario (id_usuario),
-    CONSTRAINT fk_avaliacao_viagem FOREIGN KEY (id_viagem) REFERENCES viagem (id_viagem),
-    CONSTRAINT fk_avaliacao_estabelecimento FOREIGN KEY (id_estabelecimento) REFERENCES estabelecimento (id_estabelecimento)
+    constraint fk_usuario foreign key (fk_usuario) references usuario (id_usuario),
+    constraint fk_viagem foreign key (fk_viagem) references viagem (id_viagem),
+    constraint fk_estabelecimento foreign key (fk_estabelecimento) references estabelecimento (id_estabelecimento)
 );
 
-INSERT INTO avaliacao_estabelecimento (id_usuario, id_viagem, id_estabelecimento, nota, comentario)
+INSERT INTO avaliacao_estabelecimento (fk_usuario, fk_viagem, fk_estabelecimento, nota, comentario)
 VALUES
     (1, 1, 101, 5, 'Excelente café, super recomendo!'),
     (1, 1, 102, 4, 'Pão de queijo delicioso...'),
