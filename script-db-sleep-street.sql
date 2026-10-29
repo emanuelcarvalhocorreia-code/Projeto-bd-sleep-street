@@ -1,23 +1,19 @@
-ADD CONSTRAINT fk_viagem_usuario
-FOREIGN KEY (id_viajante) REFERENCES usuario (id_usuario);
-
-ADD CONSTRAINT fk_favorito_usuario
-FOREIGN KEY (id_usuario) REFERENCES usuario (id_usuario);
-
 CREATE TABLE viagem (
-id_viagem   SERIAL PRIMARY KEY,
-id_viajante INT not null,
-titulo_viagem varchar(255) not null,
-destino_cidade varchar(100) not null,
-destino_pais varchar(100) not null,
-fuso_horario_destino varchar(50) not null,
-data_inicio date not null,
-data_fim date not null,
-orcamento_total decimal(12,2) not null,
-ativa boolean,
-data_criacao timestamp
-
-)
+id_viagem SERIAL PRIMARY KEY,
+id_viajante int NOT NULL,
+titulo_viagem varchar(255) NOT NULL,
+tipo_viagem varchar(20) NOT NULL CHECK,
+destino_cidade varchar(100) NOT NULL,
+destino_pais varchar(100) NOT NULL,
+fuso_horario_destino varchar(50) NOT NULL,
+data_inicio date NOT NULL,
+data_fim date NOT NULL,
+orcamento_total decimal(12,2) NOT NULL,
+ativa boolean DEFAULT true,
+data_criacao timestamp NOT NULL,
+CONSTRAINT fk_viagem_usuario
+FOREIGN KEY (id_viajante) REFERENCES usuario (id_usuario)
+);
 
 INSERT INTO viagem (
 id_viagem,
