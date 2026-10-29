@@ -9,8 +9,7 @@ CREATE TABLE usuario (
     tipo_perfil VARCHAR(50) NOT NULL,
     consentimento_lgpd_geo BOOLEAN NOT NULL,
     data_cadastro TIMESTAMP NOT NULL DEFAULT NOW(),
-    CONSTRAINT fk_usuario_responsavel FOREIGN KEY (id_responsavel_legal) REFERENCES usuario (id_usuario) ON UPDATE CASCADE ON DELETE SET NULL,
-    CONSTRAINT chk_tipo_perfil CHECK (tipo_perfil IN ('viajante', 'administrador', 'moderador'))
+    DROP CONSTRAINT fk_usuario_responsavel FOREIGN KEY (id_responsavel_legal) REFERENCES usuario (id_usuario)
 );
 
 INSERT INTO usuario (id_usuario, nome, email, senha_hash, data_nascimento, eh_maior_idade, id_responsavel_legal, tipo_perfil, consentimento_lgpd_geo)
