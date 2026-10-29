@@ -148,17 +148,10 @@ categoria_despesa_enum varchar not null,
 descricao varchar(150) not null,
 valor_despesa decimal(10,2) not null,
 data_despesa timestamp
+ADD CONSTRAINT fk_despesa_viagem
+FOREIGN KEY (id_viagem) REFERENCES viagem (id_viagem);
 )
 
-INSERT INTO despeja_viagem (
-id_despeja_viagem,
-id_usuario,
-id_estabelecimento,
-id_viajem,
-data_hora_despeja,
-quantidade,
-observacao
-)
 VALUES
 (1, 123, 101, 1, NOW(), 2.5, 'Café expresso duplo'),
 (2, 123, 102, 2, NOW(), 1.0, 'Pão de queijo 3 unidades'),
